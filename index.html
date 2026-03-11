@@ -316,9 +316,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 </head>
 <body>
 
-<!-- SUPPORT FAB -->
-<button class="support-fab" id="supportFab" onclick="openSupport()" title="Support / Kritik">💬</button>
-
 <!-- SUPPORT MODAL -->
 <div id="supportOverlay">
   <div class="support-box">
@@ -438,6 +435,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <span class="emoji">✏️</span>
       <h3>Lückentext üben</h3>
       <p>Fülle Definitionen und Sätze selbst aus — das festigt den Stoff am besten.</p>
+    </div>
+    <div class="topic-card" onclick="openSupport()">
+      <span class="emoji">💬</span>
+      <h3>Support & Kritik</h3>
+      <p>Bug gefunden oder Verbesserungsvorschlag? Schreib mir direkt — ich lese alles.</p>
     </div>
   </div>
 </section>
@@ -739,9 +741,6 @@ async function saveProfile() {
 function showApp() {
   document.getElementById('authOverlay').style.display = 'none';
   document.getElementById('userInfo').style.display = 'flex';
-  document.getElementById('supportFab').style.display = 'flex';
-  document.getElementById('supportFab').style.alignItems = 'center';
-  document.getElementById('supportFab').style.justifyContent = 'center';
 
   // Use profile username — no email fallback
   const name = currentProfile?.username || '?';
