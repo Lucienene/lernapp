@@ -6,6 +6,7 @@
 <title>Lernapp — Datensicherheit & Serviceanfragen</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root {
   --bg: #0d1117;
@@ -198,9 +199,146 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+/* SUPPORT MODAL */
+.support-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  color: #0d1117;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(88,166,255,0.4);
+  transition: all 0.2s;
+  z-index: 500;
+  display: none;
+}
+.support-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(88,166,255,0.5); }
+
+#supportOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9998;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#supportOverlay.show { display: flex; animation: fadeIn 0.2s ease; }
+
+.support-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+}
+.support-box h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.support-box p {
+  font-size: 0.82rem;
+  color: var(--text2);
+  margin-bottom: 24px;
+}
+.support-field { margin-bottom: 16px; }
+.support-field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.support-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.support-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(88,166,255,0.1); }
+.support-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.15s;
+}
+.support-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(88,166,255,0.1); }
+.support-actions { display: flex; gap: 10px; margin-top: 8px; }
+.support-send-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #0d1117;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.support-send-btn:hover { opacity: 0.85; }
+.support-send-btn:disabled { opacity: 0.5; cursor: default; }
+.support-cancel-btn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.support-cancel-btn:hover { border-color: var(--accent3); color: var(--accent3); }
+.support-msg { margin-top: 12px; font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; display: none; }
+.support-msg.ok { background: var(--card-green); color: var(--accent2); border: 1px solid var(--accent2); display: block; }
+.support-msg.err { background: var(--card-red); color: var(--accent3); border: 1px solid var(--accent3); display: block; }
 </style>
 </head>
 <body>
+
+<!-- SUPPORT FAB -->
+<button class="support-fab" id="supportFab" onclick="openSupport()" title="Support / Kritik">💬</button>
+
+<!-- SUPPORT MODAL -->
+<div id="supportOverlay">
+  <div class="support-box">
+    <h2>💬 Support & Kritik</h2>
+    <p>Hast du einen Bug gefunden oder Verbesserungsvorschläge? Schreib mir direkt.</p>
+    <div class="support-field">
+      <label>Betreff</label>
+      <input type="text" class="support-input" id="supportBetreff" placeholder="z.B. Bug beim Quiz...">
+    </div>
+    <div class="support-field">
+      <label>Nachricht</label>
+      <textarea class="support-textarea" id="supportNachricht" placeholder="Beschreib dein Anliegen..."></textarea>
+    </div>
+    <div class="support-actions">
+      <button class="support-cancel-btn" onclick="closeSupport()">Abbrechen</button>
+      <button class="support-send-btn" id="supportSendBtn" onclick="sendSupport()">Absenden →</button>
+    </div>
+    <div class="support-msg" id="supportMsg"></div>
+  </div>
+</div>
 
 <div id="authOverlay">
   <div class="auth-box">
@@ -601,6 +739,9 @@ async function saveProfile() {
 function showApp() {
   document.getElementById('authOverlay').style.display = 'none';
   document.getElementById('userInfo').style.display = 'flex';
+  document.getElementById('supportFab').style.display = 'flex';
+  document.getElementById('supportFab').style.alignItems = 'center';
+  document.getElementById('supportFab').style.justifyContent = 'center';
 
   // Use profile username — no email fallback
   const name = currentProfile?.username || '?';
@@ -1130,6 +1271,66 @@ function updateProgress() {
 // ════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════
+
+// ════════════════════════════════════════════════
+// SUPPORT / KRITIK
+// ════════════════════════════════════════════════
+emailjs.init('LjP99FAzuIgC0btPe');
+
+function openSupport() {
+  document.getElementById('supportBetreff').value = '';
+  document.getElementById('supportNachricht').value = '';
+  document.getElementById('supportMsg').className = 'support-msg';
+  document.getElementById('supportMsg').textContent = '';
+  document.getElementById('supportSendBtn').disabled = false;
+  document.getElementById('supportSendBtn').textContent = 'Absenden →';
+  document.getElementById('supportOverlay').classList.add('show');
+}
+
+function closeSupport() {
+  document.getElementById('supportOverlay').classList.remove('show');
+}
+
+async function sendSupport() {
+  const betreff = document.getElementById('supportBetreff').value.trim();
+  const nachricht = document.getElementById('supportNachricht').value.trim();
+  const msgEl = document.getElementById('supportMsg');
+  const btn = document.getElementById('supportSendBtn');
+
+  if (!betreff || !nachricht) {
+    msgEl.textContent = 'Bitte Betreff und Nachricht ausfüllen.';
+    msgEl.className = 'support-msg err';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Wird gesendet...';
+  msgEl.className = 'support-msg';
+
+  try {
+    await emailjs.send('service_z7xc0yr', 'template_8ssr0zd', {
+      betreff: betreff,
+      nachricht: nachricht,
+      von: currentUser?.email || 'Unbekannt',
+      username: currentProfile?.username || 'Unbekannt',
+    });
+    msgEl.textContent = '✓ Nachricht wurde gesendet!';
+    msgEl.className = 'support-msg ok';
+    btn.textContent = 'Gesendet ✓';
+    setTimeout(() => closeSupport(), 2000);
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    msgEl.textContent = '✗ Fehler beim Senden. Bitte versuch es nochmal.';
+    msgEl.className = 'support-msg err';
+    btn.disabled = false;
+    btn.textContent = 'Absenden →';
+  }
+}
+
+document.getElementById('supportOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('supportOverlay')) closeSupport();
+});
+
 renderGlossar();
 initAuth();
 </script>
