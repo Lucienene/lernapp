@@ -584,9 +584,10 @@ async function loadProfile() {
 }
 
 async function saveProfile() {
-  if (!currentUser) return;
+  if (!currentUser || !currentProfile) return;
   const payload = {
     id: currentUser.id,
+    username: currentProfile.username,
     score: score,
     known_cards: JSON.stringify([...knownCards]),
     quiz_highscore: quizHighscore,
