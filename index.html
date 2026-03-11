@@ -26,825 +26,174 @@
   --card-purple: #1a1035;
   --card-orange: #2d1f0d;
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ─── HEADER ─────────────────────────────────── */
-.header {
-  padding: 20px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.3rem;
-  color: var(--accent);
-  letter-spacing: -0.02em;
-}
+.header { padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 100; }
+.logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--accent); letter-spacing: -0.02em; }
 .logo span { color: var(--text2); font-size: 0.75rem; display: block; font-family: 'DM Sans', sans-serif; font-weight: 400; margin-top: 1px; }
-
-.progress-bar-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  max-width: 400px;
-  margin: 0 40px;
-}
+.progress-bar-wrap { display: flex; align-items: center; gap: 12px; flex: 1; max-width: 400px; margin: 0 40px; }
 .progress-label { font-size: 0.72rem; color: var(--text2); white-space: nowrap; }
-.progress-track {
-  flex: 1;
-  height: 6px;
-  background: var(--border);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent4));
-  border-radius: 99px;
-  transition: width 0.6s cubic-bezier(.4,0,.2,1);
-  width: 0%;
-}
-.score-badge {
-  background: var(--card-blue);
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 4px 12px;
-  border-radius: 99px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  font-family: 'DM Mono', monospace;
-}
+.progress-track { flex: 1; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent4)); border-radius: 99px; transition: width 0.6s cubic-bezier(.4,0,.2,1); width: 0%; }
+.score-badge { background: var(--card-blue); border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; border-radius: 99px; font-size: 0.78rem; font-weight: 600; font-family: 'DM Mono', monospace; }
 
-/* ─── NAV TABS ───────────────────────────────── */
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-  padding: 16px 32px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-}
-.tab-btn {
-  padding: 8px 18px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text2);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+.nav-tabs { display: flex; gap: 4px; padding: 16px 32px; background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.tab-btn { padding: 8px 18px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: all 0.15s; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
 .tab-btn:hover { background: var(--surface2); color: var(--text); }
-.tab-btn.active {
-  background: var(--accent);
-  color: #0d1117;
-  font-weight: 700;
-  border-color: var(--accent);
-}
+.tab-btn.active { background: var(--accent); color: #0d1117; font-weight: 700; border-color: var(--accent); }
 
-/* ─── MAIN ───────────────────────────────────── */
 .main { padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
-
 .section { display: none; }
 .section.active { display: block; animation: fadeIn 0.3s ease; }
-
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ─── ÜBERSICHT ──────────────────────────────── */
-.hero {
-  background: linear-gradient(135deg, var(--card-blue) 0%, var(--card-purple) 100%);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 28px;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(88,166,255,0.15) 0%, transparent 70%);
-  border-radius: 50%;
-}
-.hero h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 2rem;
-  color: var(--text);
-  margin-bottom: 8px;
-}
+.hero { background: linear-gradient(135deg, var(--card-blue) 0%, var(--card-purple) 100%); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 28px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(88,166,255,0.15) 0%, transparent 70%); border-radius: 50%; }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--text); margin-bottom: 8px; }
 .hero p { color: var(--text2); font-size: 0.92rem; line-height: 1.6; max-width: 500px; }
 
-.topics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-.topic-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-.topic-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(88,166,255,0.1);
-}
+.topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.topic-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+.topic-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(88,166,255,0.1); }
 .topic-card .emoji { font-size: 1.6rem; margin-bottom: 10px; display: block; }
 .topic-card h3 { font-size: 0.92rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
 .topic-card p { font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
-.topic-card .tag {
-  position: absolute;
-  top: 12px; right: 12px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  padding: 2px 8px;
-  border-radius: 99px;
-  font-size: 0.68rem;
-  color: var(--text3);
-  font-family: 'DM Mono', monospace;
-}
+.topic-card .tag { position: absolute; top: 12px; right: 12px; background: var(--surface2); border: 1px solid var(--border); padding: 2px 8px; border-radius: 99px; font-size: 0.68rem; color: var(--text3); font-family: 'DM Mono', monospace; }
 
-/* ─── LERNKARTEN ─────────────────────────────── */
-.flashcard-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
+.flashcard-controls { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
 .fc-filter { display: flex; gap: 8px; flex-wrap: wrap; }
-.filter-btn {
-  padding: 6px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text2);
-  font-size: 0.78rem;
-  font-family: 'DM Sans', sans-serif;
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.filter-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text2); font-size: 0.78rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s; }
 .filter-btn:hover { border-color: var(--accent); color: var(--text); }
 .filter-btn.active { background: var(--accent); color: #0d1117; border-color: var(--accent); font-weight: 600; }
+.fc-counter { font-size: 0.78rem; color: var(--text2); font-family: 'DM Mono', monospace; }
 
-.fc-counter {
-  font-size: 0.78rem;
-  color: var(--text2);
-  font-family: 'DM Mono', monospace;
-}
-
-.flashcard-scene {
-  perspective: 1000px;
-  width: 100%;
-  max-width: 680px;
-  margin: 0 auto 28px;
-  height: 280px;
-  cursor: pointer;
-}
-.flashcard {
-  width: 100%; height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.55s cubic-bezier(.4,0,.2,1);
-}
+.flashcard-scene { perspective: 1000px; width: 100%; max-width: 680px; margin: 0 auto 28px; height: 280px; cursor: pointer; }
+.flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(.4,0,.2,1); }
 .flashcard.flipped { transform: rotateY(180deg); }
-
-.fc-face {
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  padding: 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  backface-visibility: hidden;
-  border: 1px solid var(--border);
-}
-.fc-front {
-  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
-}
-.fc-back {
-  background: linear-gradient(135deg, var(--card-blue) 0%, var(--card-purple) 100%);
-  transform: rotateY(180deg);
-}
-
-.fc-category {
-  font-size: 0.7rem;
-  font-family: 'DM Mono', monospace;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
-}
-.fc-question {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.35rem;
-  color: var(--text);
-  line-height: 1.4;
-}
+.fc-face { position: absolute; inset: 0; border-radius: 16px; padding: 36px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; backface-visibility: hidden; border: 1px solid var(--border); }
+.fc-front { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%); }
+.fc-back { background: linear-gradient(135deg, var(--card-blue) 0%, var(--card-purple) 100%); transform: rotateY(180deg); }
+.fc-category { font-size: 0.7rem; font-family: 'DM Mono', monospace; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+.fc-question { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: var(--text); line-height: 1.4; }
 .fc-hint { font-size: 0.75rem; color: var(--text3); margin-top: 20px; }
-.fc-answer {
-  font-size: 0.95rem;
-  color: var(--text);
-  line-height: 1.65;
-}
+.fc-answer { font-size: 0.95rem; color: var(--text); line-height: 1.65; }
 .fc-answer strong { color: var(--accent); }
 .fc-answer .highlight { color: var(--accent2); font-weight: 600; }
 .fc-answer .warn { color: var(--accent3); font-weight: 600; }
 
-.fc-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-.fc-btn {
-  padding: 10px 24px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.fc-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 20px; }
+.fc-btn { padding: 10px 24px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.15s; }
 .fc-btn:hover { background: var(--surface2); border-color: var(--accent); }
 .fc-btn.primary { background: var(--accent); color: #0d1117; font-weight: 700; border-color: var(--accent); }
 .fc-btn.primary:hover { opacity: 0.85; }
 .fc-btn.success { background: var(--card-green); border-color: var(--accent2); color: var(--accent2); }
 .fc-btn.danger { background: var(--card-red); border-color: var(--accent3); color: var(--accent3); }
-
-.fc-dots {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.fc-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background 0.2s;
-}
+.fc-dots { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; max-width: 600px; margin: 0 auto; }
+.fc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
 .fc-dot.current { background: var(--accent); transform: scale(1.4); }
 .fc-dot.known { background: var(--accent2); }
 .fc-dot.unknown { background: var(--accent3); }
 
-/* ─── QUIZ ───────────────────────────────────── */
-.quiz-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-.quiz-timer {
-  font-family: 'DM Mono', monospace;
-  font-size: 1.1rem;
-  color: var(--accent5);
-  background: var(--card-orange);
-  border: 1px solid var(--accent5);
-  padding: 6px 16px;
-  border-radius: 8px;
-}
+.quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.quiz-timer { font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--accent5); background: var(--card-orange); border: 1px solid var(--accent5); padding: 6px 16px; border-radius: 8px; }
 .quiz-progress { font-size: 0.82rem; color: var(--text2); }
-
-.quiz-question-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 20px;
-}
-.quiz-q-cat {
-  font-size: 0.72rem;
-  font-family: 'DM Mono', monospace;
-  color: var(--accent4);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 12px;
-}
-.quiz-q-text {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.25rem;
-  color: var(--text);
-  line-height: 1.45;
-}
-
-.quiz-options {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-.quiz-option {
-  padding: 16px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.quiz-question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 20px; }
+.quiz-q-cat { font-size: 0.72rem; font-family: 'DM Mono', monospace; color: var(--accent4); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.quiz-q-text { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--text); line-height: 1.45; }
+.quiz-options { display: grid; gap: 10px; margin-bottom: 24px; }
+.quiz-option { padding: 16px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.15s; text-align: left; display: flex; align-items: center; gap: 12px; }
 .quiz-option:hover:not(:disabled) { border-color: var(--accent); background: var(--card-blue); }
-.quiz-option .opt-letter {
-  width: 28px; height: 28px;
-  border-radius: 8px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.78rem;
-  font-weight: 700;
-  font-family: 'DM Mono', monospace;
-  flex-shrink: 0;
-}
+.quiz-option .opt-letter { width: 28px; height: 28px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; font-family: 'DM Mono', monospace; flex-shrink: 0; }
 .quiz-option.correct { border-color: var(--accent2); background: var(--card-green); color: var(--accent2); }
 .quiz-option.correct .opt-letter { background: var(--accent2); color: #0d1117; border-color: var(--accent2); }
 .quiz-option.wrong { border-color: var(--accent3); background: var(--card-red); color: var(--accent3); }
 .quiz-option.wrong .opt-letter { background: var(--accent3); color: #0d1117; border-color: var(--accent3); }
 .quiz-option:disabled { cursor: default; }
-
-.quiz-feedback {
-  padding: 16px 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  display: none;
-}
+.quiz-feedback { padding: 16px 20px; border-radius: 12px; margin-bottom: 20px; font-size: 0.88rem; line-height: 1.6; display: none; }
 .quiz-feedback.correct { background: var(--card-green); border: 1px solid var(--accent2); color: var(--accent2); }
 .quiz-feedback.wrong { background: var(--card-red); border: 1px solid var(--accent3); color: var(--accent3); }
 .quiz-feedback.show { display: block; animation: fadeIn 0.2s ease; }
-
-.quiz-next-btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  background: var(--accent);
-  color: #0d1117;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.15s;
-  display: none;
-}
+.quiz-next-btn { width: 100%; padding: 14px; border-radius: 12px; border: none; background: var(--accent); color: #0d1117; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.15s; display: none; }
 .quiz-next-btn:hover { opacity: 0.85; }
 .quiz-next-btn.show { display: block; animation: fadeIn 0.2s ease; }
-
-.quiz-result {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 48px 32px;
-  text-align: center;
-  display: none;
-}
+.quiz-result { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 48px 32px; text-align: center; display: none; }
 .quiz-result.show { display: block; animation: fadeIn 0.4s ease; }
-.quiz-result .big-score {
-  font-family: 'DM Serif Display', serif;
-  font-size: 5rem;
-  line-height: 1;
-  margin-bottom: 8px;
-}
+.quiz-result .big-score { font-family: 'DM Serif Display', serif; font-size: 5rem; line-height: 1; margin-bottom: 8px; }
 .quiz-result .score-label { font-size: 0.9rem; color: var(--text2); margin-bottom: 24px; }
 .quiz-result .result-msg { font-size: 1.1rem; color: var(--text); margin-bottom: 32px; font-family: 'DM Serif Display', serif; }
-.restart-btn {
-  padding: 12px 32px;
-  border-radius: 10px;
-  border: 1px solid var(--accent);
-  background: transparent;
-  color: var(--accent);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.restart-btn { padding: 12px 32px; border-radius: 10px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
 .restart-btn:hover { background: var(--accent); color: #0d1117; }
 
-/* ─── LÜCKENTEXT ─────────────────────────────── */
-.fill-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 20px;
-}
-.fill-card h3 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  color: var(--accent4);
-}
-.fill-sentence {
-  font-size: 1rem;
-  line-height: 2.2;
-  color: var(--text);
-}
-.fill-input {
-  background: var(--surface2);
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  padding: 3px 10px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
-  min-width: 120px;
-  outline: none;
-  transition: border-color 0.15s;
-}
+.fill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 20px; }
+.fill-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; margin-bottom: 20px; color: var(--accent4); }
+.fill-sentence { font-size: 1rem; line-height: 2.2; color: var(--text); }
+.fill-input { background: var(--surface2); border: 1px solid var(--accent); border-radius: 6px; padding: 3px 10px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; min-width: 120px; outline: none; transition: border-color 0.15s; }
 .fill-input:focus { border-color: var(--accent4); box-shadow: 0 0 0 2px rgba(210,168,255,0.15); }
 .fill-input.correct { border-color: var(--accent2); background: var(--card-green); color: var(--accent2); }
 .fill-input.wrong { border-color: var(--accent3); background: var(--card-red); color: var(--accent3); }
-
-.fill-check-btn {
-  padding: 10px 24px;
-  border-radius: 10px;
-  border: none;
-  background: var(--accent4);
-  color: #0d1117;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 16px;
-  transition: opacity 0.15s;
-}
+.fill-check-btn { padding: 10px 24px; border-radius: 10px; border: none; background: var(--accent4); color: #0d1117; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; margin-top: 16px; transition: opacity 0.15s; }
 .fill-check-btn:hover { opacity: 0.85; }
 .fill-result { margin-top: 12px; font-size: 0.85rem; display: none; padding: 10px 14px; border-radius: 8px; }
 .fill-result.show { display: block; }
 .fill-result.ok { background: var(--card-green); color: var(--accent2); border: 1px solid var(--accent2); }
 .fill-result.nok { background: var(--card-red); color: var(--accent3); border: 1px solid var(--accent3); }
 
-/* ─── ZUSAMMENFASSUNG ────────────────────────── */
-.summary-grid {
-  display: grid;
-  gap: 20px;
-}
-.summary-block {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px;
-  transition: border-color 0.2s;
-}
+.summary-grid { display: grid; gap: 20px; }
+.summary-block { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; transition: border-color 0.2s; }
 .summary-block:hover { border-color: var(--accent); }
-.summary-block h2 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.15rem;
-  color: var(--accent);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.summary-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
-}
-.summary-table th {
-  background: var(--surface2);
-  color: var(--text2);
-  font-weight: 600;
-  padding: 8px 12px;
-  text-align: left;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.summary-table td {
-  padding: 9px 12px;
-  border-top: 1px solid var(--border);
-  color: var(--text);
-  vertical-align: top;
-  line-height: 1.5;
-}
+.summary-block h2 { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.summary-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.summary-table th { background: var(--surface2); color: var(--text2); font-weight: 600; padding: 8px 12px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.summary-table td { padding: 9px 12px; border-top: 1px solid var(--border); color: var(--text); vertical-align: top; line-height: 1.5; }
 .summary-table tr:hover td { background: var(--surface2); }
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 99px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  font-family: 'DM Mono', monospace;
-}
+.badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 0.72rem; font-weight: 600; font-family: 'DM Mono', monospace; }
 .badge-blue { background: var(--card-blue); color: var(--accent); border: 1px solid rgba(88,166,255,0.3); }
 .badge-green { background: var(--card-green); color: var(--accent2); border: 1px solid rgba(63,185,80,0.3); }
 .badge-red { background: var(--card-red); color: var(--accent3); border: 1px solid rgba(247,129,102,0.3); }
 .badge-purple { background: var(--card-purple); color: var(--accent4); border: 1px solid rgba(210,168,255,0.3); }
 .badge-orange { background: var(--card-orange); color: var(--accent5); border: 1px solid rgba(255,166,87,0.3); }
-
-.warn-box {
-  background: var(--card-red);
-  border: 1px solid var(--accent3);
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 0.83rem;
-  color: var(--accent3);
-  margin-top: 12px;
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-}
-.tip-box {
-  background: var(--card-orange);
-  border: 1px solid var(--accent5);
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 0.83rem;
-  color: var(--accent5);
-  margin-top: 12px;
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-}
-.info-box-s {
-  background: var(--card-blue);
-  border: 1px solid rgba(88,166,255,0.3);
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 0.83rem;
-  color: var(--text);
-  line-height: 1.6;
-  margin-top: 8px;
-}
-
+.warn-box { background: var(--card-red); border: 1px solid var(--accent3); border-radius: 8px; padding: 12px 16px; font-size: 0.83rem; color: var(--accent3); margin-top: 12px; display: flex; gap: 8px; align-items: flex-start; }
+.tip-box { background: var(--card-orange); border: 1px solid var(--accent5); border-radius: 8px; padding: 12px 16px; font-size: 0.83rem; color: var(--accent5); margin-top: 12px; display: flex; gap: 8px; align-items: flex-start; }
+.info-box-s { background: var(--card-blue); border: 1px solid rgba(88,166,255,0.3); border-radius: 8px; padding: 12px 16px; font-size: 0.83rem; color: var(--text); line-height: 1.6; margin-top: 8px; }
 .step-list { list-style: none; }
-.step-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.88rem;
-  color: var(--text);
-}
+.step-list li { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; color: var(--text); }
 .step-list li:last-child { border-bottom: none; }
-.step-num {
-  width: 26px; height: 26px;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #0d1117;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.78rem;
-  font-weight: 700;
-  font-family: 'DM Mono', monospace;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
+.step-num { width: 26px; height: 26px; border-radius: 8px; background: var(--accent); color: #0d1117; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; font-family: 'DM Mono', monospace; flex-shrink: 0; margin-top: 1px; }
 
-/* ─── GLOSSAR ────────────────────────────────── */
-.glossar-search {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
-  outline: none;
-  margin-bottom: 20px;
-  transition: border-color 0.15s;
-}
+.glossar-search { width: 100%; max-width: 400px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; margin-bottom: 20px; transition: border-color 0.15s; }
 .glossar-search:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(88,166,255,0.1); }
-.glossar-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
-}
-.glossar-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
-  transition: border-color 0.2s;
-}
+.glossar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.glossar-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; transition: border-color 0.2s; }
 .glossar-item:hover { border-color: var(--accent); }
-.glossar-item .term {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
+.glossar-item .term { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 500; color: var(--accent); margin-bottom: 6px; }
 .glossar-item .def { font-size: 0.82rem; color: var(--text2); line-height: 1.5; }
 
-/* ─── SECTION HEADERS ────────────────────────── */
-.section-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.6rem;
-  color: var(--text);
-  margin-bottom: 6px;
-}
+.section-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--text); margin-bottom: 6px; }
 .section-sub { font-size: 0.85rem; color: var(--text2); margin-bottom: 24px; }
 
-/* ─── AUTH OVERLAY ───────────────────────────── */
-#authOverlay {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.auth-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 40px;
-  width: 100%;
-  max-width: 420px;
-  animation: fadeIn 0.4s ease;
-}
-.auth-logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.8rem;
-  color: var(--accent);
-  text-align: center;
-  margin-bottom: 6px;
-}
-.auth-sub {
-  font-size: 0.82rem;
-  color: var(--text2);
-  text-align: center;
-  margin-bottom: 32px;
-}
-.auth-tabs {
-  display: flex;
-  background: var(--surface2);
-  border-radius: 10px;
-  padding: 4px;
-  margin-bottom: 24px;
-  gap: 4px;
-}
-.auth-tab {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  color: var(--text2);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.auth-tab.active {
-  background: var(--accent);
-  color: #0d1117;
-  font-weight: 700;
-}
-.auth-field {
-  margin-bottom: 16px;
-}
-.auth-field label {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text2);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.auth-input {
-  width: 100%;
-  padding: 11px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.92rem;
-  outline: none;
-  transition: border-color 0.15s;
-}
+/* AUTH */
+#authOverlay { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.auth-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px; width: 100%; max-width: 420px; animation: fadeIn 0.4s ease; }
+.auth-logo { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--accent); text-align: center; margin-bottom: 6px; }
+.auth-sub { font-size: 0.82rem; color: var(--text2); text-align: center; margin-bottom: 32px; }
+.auth-tabs { display: flex; background: var(--surface2); border-radius: 10px; padding: 4px; margin-bottom: 24px; gap: 4px; }
+.auth-tab { flex: 1; padding: 8px; border-radius: 8px; border: none; background: transparent; color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.auth-tab.active { background: var(--accent); color: #0d1117; font-weight: 700; }
+.auth-field { margin-bottom: 16px; }
+.auth-field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.auth-input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.92rem; outline: none; transition: border-color 0.15s; }
 .auth-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(88,166,255,0.1); }
-.auth-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  background: var(--accent);
-  color: #0d1117;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: opacity 0.15s;
-}
+.auth-btn { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--accent); color: #0d1117; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 8px; transition: opacity 0.15s; }
 .auth-btn:hover { opacity: 0.85; }
 .auth-btn:disabled { opacity: 0.5; cursor: default; }
-.auth-error {
-  background: var(--card-red);
-  border: 1px solid var(--accent3);
-  color: var(--accent3);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 0.82rem;
-  margin-top: 12px;
-  display: none;
-}
-.auth-success {
-  background: var(--card-green);
-  border: 1px solid var(--accent2);
-  color: var(--accent2);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 0.82rem;
-  margin-top: 12px;
-  display: none;
-}
-.auth-loading {
-  text-align: center;
-  color: var(--text2);
-  font-size: 0.85rem;
-  padding: 20px;
-}
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.user-avatar {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent4));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #0d1117;
-}
-.logout-btn {
-  padding: 5px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text2);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.15s;
-}
+.auth-error { background: var(--card-red); border: 1px solid var(--accent3); color: var(--accent3); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; margin-top: 12px; display: none; }
+.auth-success { background: var(--card-green); border: 1px solid var(--accent2); color: var(--accent2); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; margin-top: 12px; display: none; }
+.user-info { display: flex; align-items: center; gap: 10px; }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent4)); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: #0d1117; }
+.logout-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 0.75rem; cursor: pointer; transition: all 0.15s; }
 .logout-btn:hover { border-color: var(--accent3); color: var(--accent3); }
 
-/* scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
@@ -853,45 +202,24 @@ body {
 </head>
 <body>
 
-<!-- ═══ AUTH OVERLAY ════════════════════════════════════════════ -->
 <div id="authOverlay">
   <div class="auth-box">
     <div class="auth-logo">Lernapp</div>
     <div class="auth-sub">wie geil bist du in BfK-B?</div>
-
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="switchAuthTab('login', this)">Anmelden</button>
       <button class="auth-tab" onclick="switchAuthTab('register', this)">Registrieren</button>
     </div>
-
-    <!-- LOGIN -->
     <div id="loginForm">
-      <div class="auth-field">
-        <label>E-Mail</label>
-        <input type="email" class="auth-input" id="loginEmail" placeholder="deine@email.de" autocomplete="email">
-      </div>
-      <div class="auth-field">
-        <label>Passwort</label>
-        <input type="password" class="auth-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
-      </div>
+      <div class="auth-field"><label>E-Mail</label><input type="email" class="auth-input" id="loginEmail" placeholder="deine@email.de" autocomplete="email"></div>
+      <div class="auth-field"><label>Passwort</label><input type="password" class="auth-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password"></div>
       <button class="auth-btn" onclick="doLogin()" id="loginBtn">Anmelden →</button>
       <div class="auth-error" id="loginError"></div>
     </div>
-
-    <!-- REGISTER -->
     <div id="registerForm" style="display:none;">
-      <div class="auth-field">
-        <label>Benutzername</label>
-        <input type="text" class="auth-input" id="regUsername" placeholder="z.B. lucien123" autocomplete="username">
-      </div>
-      <div class="auth-field">
-        <label>E-Mail</label>
-        <input type="email" class="auth-input" id="regEmail" placeholder="deine@email.de" autocomplete="email">
-      </div>
-      <div class="auth-field">
-        <label>Passwort</label>
-        <input type="password" class="auth-input" id="regPassword" placeholder="Mind. 6 Zeichen" autocomplete="new-password">
-      </div>
+      <div class="auth-field"><label>Benutzername</label><input type="text" class="auth-input" id="regUsername" placeholder="z.B. lucien123" autocomplete="username"></div>
+      <div class="auth-field"><label>E-Mail</label><input type="email" class="auth-input" id="regEmail" placeholder="deine@email.de" autocomplete="email"></div>
+      <div class="auth-field"><label>Passwort</label><input type="password" class="auth-input" id="regPassword" placeholder="Mind. 6 Zeichen" autocomplete="new-password"></div>
       <button class="auth-btn" onclick="doRegister()" id="registerBtn">Account erstellen →</button>
       <div class="auth-error" id="registerError"></div>
       <div class="auth-success" id="registerSuccess"></div>
@@ -900,10 +228,7 @@ body {
 </div>
 
 <header class="header">
-  <div class="logo">
-    Lernapp
-    <span>wie geil bist du in BfK-B?</span>
-  </div>
+  <div class="logo">Lernapp<span>wie geil bist du in BfK-B?</span></div>
   <div class="progress-bar-wrap">
     <span class="progress-label">Karten gelernt</span>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
@@ -930,7 +255,6 @@ body {
 
 <main class="main">
 
-<!-- ═══ ÜBERSICHT ═══════════════════════════════════════════════ -->
 <section id="uebersicht" class="section active">
   <div class="hero">
     <h1>Bereit für die Prüfung? 💪</h1>
@@ -938,38 +262,32 @@ body {
   </div>
   <div class="topics-grid">
     <div class="topic-card" onclick="showSection('karten', document.querySelectorAll('.tab-btn')[2]); setFilter('schutzziele')">
-      <span class="emoji">🔐</span>
-      <div class="tag">T1–T2</div>
+      <span class="emoji">🔐</span><div class="tag">T1–T2</div>
       <h3>Schutzziele (VIV / VIVA)</h3>
       <p>Vertraulichkeit, Integrität, Verfügbarkeit + erweiterte Schutzziele Authentizität, Nichtabstreitbarkeit, Verbindlichkeit, Zuverlässigkeit</p>
     </div>
     <div class="topic-card" onclick="showSection('karten', document.querySelectorAll('.tab-btn')[2]); setFilter('dsgvo')">
-      <span class="emoji">📜</span>
-      <div class="tag">T3</div>
+      <span class="emoji">📜</span><div class="tag">T3</div>
       <h3>DSGVO & BDSG</h3>
       <p>Datenschutzgrundverordnung, Betroffenenrechte (Auskunft, Berichtigung, Löschung...), Verhältnis BDSG zur DSGVO</p>
     </div>
     <div class="topic-card" onclick="showSection('karten', document.querySelectorAll('.tab-btn')[2]); setFilter('iso')">
-      <span class="emoji">🏢</span>
-      <div class="tag">T4</div>
+      <span class="emoji">🏢</span><div class="tag">T4</div>
       <h3>ISO 27001 & BSI</h3>
       <p>IT-Grundschutz, TOM, Sicherheitsleitlinie vs. Sicherheitskonzept, 5-Schritte-Prozess</p>
     </div>
     <div class="topic-card" onclick="showSection('karten', document.querySelectorAll('.tab-btn')[2]); setFilter('rollen')">
-      <span class="emoji">👤</span>
-      <div class="tag">T5</div>
+      <span class="emoji">👤</span><div class="tag">T5</div>
       <h3>ISB / DSB / IT-Beauftragter</h3>
       <p>Rollen, Aufgaben und Unterschiede der drei Beauftragten. Wichtige Prüfungsfalle!</p>
     </div>
     <div class="topic-card" onclick="showSection('karten', document.querySelectorAll('.tab-btn')[2]); setFilter('service')">
-      <span class="emoji">🎫</span>
-      <div class="tag">T6</div>
+      <span class="emoji">🎫</span><div class="tag">T6</div>
       <h3>Service Request / Incident / Event</h3>
       <p>Unterschiede, Beispiel-Tickets kategorisieren, EPK-Prozessablauf</p>
     </div>
     <div class="topic-card" onclick="showSection('karten', document.querySelectorAll('.tab-btn')[2]); setFilter('support')">
-      <span class="emoji">🆘</span>
-      <div class="tag">T7–T9</div>
+      <span class="emoji">🆘</span><div class="tag">T7–T9</div>
       <h3>Support, Checkliste & SLA</h3>
       <p>FLS vs. SLS, Eskalation, Ticketcheckliste, Bronze/Silber/Gold Zeiten</p>
     </div>
@@ -986,40 +304,22 @@ body {
   </div>
 </section>
 
-<!-- ═══ ZUSAMMENFASSUNG ════════════════════════════════════════ -->
 <section id="zusammenfassung" class="section">
   <h1 class="section-title">📖 Vollständige Zusammenfassung</h1>
   <p class="section-sub">Alle Inhalte aus deinen Unterlagen auf einen Blick.</p>
-
   <div class="summary-grid">
-
-    <!-- SCHUTZZIELE -->
     <div class="summary-block">
       <h2>🔐 Die 3 primären Schutzziele (VIV / CIA)</h2>
       <div class="info-box-s" style="margin-bottom:12px;">Informationssicherheit ist eine <strong>Managementaufgabe</strong> — sie umfasst organisatorische, technische, personelle und infrastrukturelle Aspekte. Nicht nur Technik!</div>
       <table class="summary-table">
         <tr><th>Schutzziel</th><th>Definition</th><th>Beispiel Verletzung</th></tr>
-        <tr>
-          <td><span class="badge badge-blue">Vertraulichkeit</span></td>
-          <td>Nur Befugte dürfen auf Daten zugreifen</td>
-          <td>Kundendaten offen im Büro, Flipchart nicht gelöscht</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-green">Integrität</span></td>
-          <td>Daten sind vollständig und unverändert (auch Autor/Zeitstempel)</td>
-          <td>Messdaten manipuliert, Rechnung nachträglich geändert</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-orange">Verfügbarkeit</span></td>
-          <td>Systeme/Daten nutzbar wenn sie gebraucht werden ≠ immer online</td>
-          <td>Server fällt aus, Ransomware, DDoS-Angriff</td>
-        </tr>
+        <tr><td><span class="badge badge-blue">Vertraulichkeit</span></td><td>Nur Befugte dürfen auf Daten zugreifen</td><td>Kundendaten offen im Büro, Flipchart nicht gelöscht</td></tr>
+        <tr><td><span class="badge badge-green">Integrität</span></td><td>Daten sind vollständig und unverändert (auch Autor/Zeitstempel)</td><td>Messdaten manipuliert, Rechnung nachträglich geändert</td></tr>
+        <tr><td><span class="badge badge-orange">Verfügbarkeit</span></td><td>Systeme/Daten nutzbar wenn sie gebraucht werden ≠ immer online</td><td>Server fällt aus, Ransomware, DDoS-Angriff</td></tr>
       </table>
       <div class="tip-box">💡 Merksatz: VIV = Vertraulichkeit, Integrität, Verfügbarkeit — auf Englisch: CIA</div>
       <div class="warn-box">⚠️ Prüfungsfalle: Verfügbarkeit = "verfügbar wenn nötig", NICHT "permanent online"!</div>
     </div>
-
-    <!-- ERWEITERTE SCHUTZZIELE -->
     <div class="summary-block">
       <h2>🔐 Erweiterte Schutzziele (VIVA-Prinzip)</h2>
       <table class="summary-table">
@@ -1031,8 +331,6 @@ body {
       </table>
       <div class="tip-box">💡 VIVA = Verfügbarkeit + Integrität + Vertraulichkeit + Authentizität</div>
     </div>
-
-    <!-- DSGVO -->
     <div class="summary-block">
       <h2>📜 DSGVO & BDSG</h2>
       <div class="info-box-s" style="margin-bottom:12px;"><strong>DSGVO</strong> = Datenschutzgrundverordnung, seit <strong>2018, EU-weit</strong>. Schützt personenbezogene Daten. Kernprinzip: <em>Recht auf informationelle Selbstbestimmung</em>.<br><br><strong>BDSG</strong> = deutsches Ergänzungsgesetz, füllt Lücken der DSGVO über Öffnungsklauseln. Beide seit 2018.</div>
@@ -1047,8 +345,6 @@ body {
       </table>
       <div class="tip-box">💡 BDSG hat ergänzende Stellung zur DSGVO — konkretisiert sie für Deutschland, widerspricht ihr nicht.</div>
     </div>
-
-    <!-- ISO / BSI -->
     <div class="summary-block">
       <h2>🏢 ISO 27001, BSI-Grundschutz & TOM</h2>
       <div class="info-box-s" style="margin-bottom:12px;"><strong>ISO 27001</strong> = internationaler Standard für Informationssicherheits-Managementsysteme (ISMS). <strong>BSI</strong> = Bundesamt für Sicherheit in der Informationstechnik. Gibt den <strong>IT-Grundschutz</strong> vor. <strong>TOM</strong> = Technisch-Organisatorische Maßnahmen (z.B. Verschlüsselung, Zugangskontrolle, Virenschutz)</div>
@@ -1065,67 +361,31 @@ body {
         <tr><td>Was & Warum? — Ziele und Prinzipien. Das übergeordnete Dokument.</td><td>Wie? — Konkrete Maßnahmen und Systeme. Umsetzung der Leitlinie.</td></tr>
       </table>
     </div>
-
-    <!-- ISB DSB IT -->
     <div class="summary-block">
       <h2>👤 ISB, DSB und IT-Beauftragter</h2>
       <table class="summary-table">
         <tr><th>Rolle</th><th>Fokus</th><th>Kernaufgaben</th></tr>
-        <tr>
-          <td><span class="badge badge-blue">ISB</span><br><small>IT-Sicherheitsbeauftragter</small></td>
-          <td>Informationssicherheit 🔒</td>
-          <td>Sicherheitskonzept koordinieren, Risikoanalysen, Vorfälle bearbeiten, Schulungen initiieren, an Leitungsebene berichten</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-green">DSB</span><br><small>Datenschutzbeauftragter</small></td>
-          <td>Datenschutz ⚖️</td>
-          <td>DSGVO-Einhaltung überwachen, beraten und kontrollieren, mit ISB zusammenarbeiten, datenschutzrelevante Vorgänge begleiten</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-orange">IT-Beauf.</span><br><small>IT-Beauftragter</small></td>
-          <td>IT-Betrieb 🔧</td>
-          <td>IT beschaffen, Infrastruktur einbinden, Funktionsfähigkeit überwachen, IT-Einsatz organisieren</td>
-        </tr>
+        <tr><td><span class="badge badge-blue">ISB</span><br><small>IT-Sicherheitsbeauftragter</small></td><td>Informationssicherheit 🔒</td><td>Sicherheitskonzept koordinieren, Risikoanalysen, Vorfälle bearbeiten, Schulungen initiieren, an Leitungsebene berichten</td></tr>
+        <tr><td><span class="badge badge-green">DSB</span><br><small>Datenschutzbeauftragter</small></td><td>Datenschutz ⚖️</td><td>DSGVO-Einhaltung überwachen, beraten und kontrollieren, mit ISB zusammenarbeiten, datenschutzrelevante Vorgänge begleiten</td></tr>
+        <tr><td><span class="badge badge-orange">IT-Beauf.</span><br><small>IT-Beauftragter</small></td><td>IT-Betrieb 🔧</td><td>IT beschaffen, Infrastruktur einbinden, Funktionsfähigkeit überwachen, IT-Einsatz organisieren</td></tr>
       </table>
       <div class="warn-box">⚠️ Prüfungsfalle: ISB konfiguriert NICHT selbst, beantwortet KEINE Presseanfragen, leitet KEINEN Einkauf. Er KOORDINIERT nur!</div>
     </div>
-
-    <!-- SERVICE REQUEST -->
     <div class="summary-block">
       <h2>🎫 Service Request, Incident, Event</h2>
       <table class="summary-table">
         <tr><th>Begriff</th><th>Definition</th><th>Wer meldet?</th><th>Beispiel-Tickets</th></tr>
-        <tr>
-          <td><span class="badge badge-blue">Service Request</span></td>
-          <td>Normale Anfrage, kein Notfall, Betrieb läuft</td>
-          <td>Mensch (will etwas)</td>
-          <td>#84501 CAD-Lizenz, #84505 Notebooks, #84513 Falschlieferung</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-red">Incident</span></td>
-          <td>Ungeplante Störung, Betrieb beeinträchtigt</td>
-          <td>Mensch (meldet Störung)</td>
-          <td>#84502 Drucker, #84507 WLAN, #84508 Maus, #84510 Webseite, #84511 Tablet</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-orange">Event</span></td>
-          <td>Automatisches Systemereignis (positiv oder negativ)</td>
-          <td>System (automatisch)</td>
-          <td>#84503 Speicher, #84506 Backup, #84509 Controller, #84512 Login, #84514 Switch</td>
-        </tr>
+        <tr><td><span class="badge badge-blue">Service Request</span></td><td>Normale Anfrage, kein Notfall, Betrieb läuft</td><td>Mensch (will etwas)</td><td>#84501 CAD-Lizenz, #84505 Notebooks, #84513 Falschlieferung</td></tr>
+        <tr><td><span class="badge badge-red">Incident</span></td><td>Ungeplante Störung, Betrieb beeinträchtigt</td><td>Mensch (meldet Störung)</td><td>#84502 Drucker, #84507 WLAN, #84508 Maus, #84510 Webseite, #84511 Tablet</td></tr>
+        <tr><td><span class="badge badge-orange">Event</span></td><td>Automatisches Systemereignis (positiv oder negativ)</td><td>System (automatisch)</td><td>#84503 Speicher, #84506 Backup, #84509 Controller, #84512 Login, #84514 Switch</td></tr>
       </table>
       <div class="tip-box">💡 Trick: EVENT = System meldet. INCIDENT = Mensch meldet Störung. SERVICE REQUEST = Mensch will etwas haben.</div>
     </div>
-
-    <!-- FLS SLS SLA -->
     <div class="summary-block">
       <h2>🆘 FLS, SLS & SLA</h2>
       <table class="summary-table" style="margin-bottom:12px;">
         <tr><th>FLS (First-Level-Support)</th><th>SLS (Second-Level-Support)</th></tr>
-        <tr>
-          <td>Erste Anlaufstelle (SPOC), erfasst Tickets, löst einfache Probleme, Mo–Fr 8–18 Uhr</td>
-          <td>Wird bei Eskalation eingeschaltet, Fachleute mit Spezialkenntnissen, Themenschwerpunkte beachten</td>
-        </tr>
+        <tr><td>Erste Anlaufstelle (SPOC), erfasst Tickets, löst einfache Probleme, Mo–Fr 8–18 Uhr</td><td>Wird bei Eskalation eingeschaltet, Fachleute mit Spezialkenntnissen, Themenschwerpunkte beachten</td></tr>
       </table>
       <table class="summary-table">
         <tr><th></th><th>🥉 Bronze (SL1)</th><th>🥈 Silber (SL2)</th><th>🥇 Gold (SL3)</th></tr>
@@ -1136,8 +396,6 @@ body {
       </table>
       <div class="info-box-s" style="margin-top:10px;">Stundensatz: <strong>100 € netto</strong>. Kunden ohne Vertrag → automatisch Bronze (SL1).<br>Ausfall beginnt mit Störungsmeldeeingang — Wartungen & höhere Gewalt zählen NICHT.</div>
     </div>
-
-    <!-- CHECKLISTE -->
     <div class="summary-block">
       <h2>📋 Checkliste Ticketaufnahme</h2>
       <ol class="step-list">
@@ -1152,28 +410,20 @@ body {
         <li><span class="step-num">9</span><div><strong>Kundenstatus</strong> — Bestand/Neu? Notizen prüfen. Neukunde → Abteilungsleitung per Mail!</div></li>
       </ol>
     </div>
-
-    <!-- KERN/UNTERSTÜTZUNG -->
     <div class="summary-block">
       <h2>🔄 Kern- und Unterstützungsprozesse</h2>
       <table class="summary-table">
         <tr><th>Kernprozess</th><th>Unterstützungsprozess</th></tr>
-        <tr>
-          <td>Direkt wertschöpfend, erzeugt Kundennutzen.<br><em>Beispiele: Auftrag erfassen, Ware versenden, Rechnung stellen, Zahlungseingang buchen</em></td>
-          <td>Ermöglicht Kernprozesse, kein direkter Kundennutzen.<br><em>Beispiele: Teile beschaffen, einlagern, IT-Betrieb, Personalverwaltung</em></td>
-        </tr>
+        <tr><td>Direkt wertschöpfend, erzeugt Kundennutzen.<br><em>Beispiele: Auftrag erfassen, Ware versenden, Rechnung stellen, Zahlungseingang buchen</em></td><td>Ermöglicht Kernprozesse, kein direkter Kundennutzen.<br><em>Beispiele: Teile beschaffen, einlagern, IT-Betrieb, Personalverwaltung</em></td></tr>
       </table>
       <div class="tip-box">💡 Kernprozess = Kunde merkt es direkt. Unterstützungsprozess = läuft im Hintergrund.</div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══ LERNKARTEN ══════════════════════════════════════════════ -->
 <section id="karten" class="section">
   <h1 class="section-title">🃏 Lernkarten</h1>
   <p class="section-sub">Klick auf die Karte um die Antwort zu sehen. Dann bewerte dich selbst.</p>
-
   <div class="flashcard-controls">
     <div class="fc-filter">
       <button class="filter-btn active" onclick="setFilter('alle', this)">Alle</button>
@@ -1186,7 +436,6 @@ body {
     </div>
     <div class="fc-counter" id="fcCounter">Karte 1 / 1</div>
   </div>
-
   <div class="flashcard-scene" onclick="flipCard()">
     <div class="flashcard" id="flashcard">
       <div class="fc-face fc-front">
@@ -1200,7 +449,6 @@ body {
       </div>
     </div>
   </div>
-
   <div class="fc-nav">
     <button class="fc-btn" onclick="prevCard()">← Zurück</button>
     <button class="fc-btn danger" onclick="markCard(false)">✗ Nochmal</button>
@@ -1208,15 +456,12 @@ body {
     <button class="fc-btn" onclick="nextCard()">Weiter →</button>
   </div>
   <div class="fc-btn primary" style="display:block;margin:0 auto 24px;max-width:200px;text-align:center;padding:10px;" onclick="shuffleCards()">🔀 Mischen</div>
-
   <div class="fc-dots" id="fcDots"></div>
 </section>
 
-<!-- ═══ QUIZ ════════════════════════════════════════════════════ -->
 <section id="quiz" class="section">
   <h1 class="section-title">🧠 Quiz</h1>
   <p class="section-sub">20 Fragen aus allen Themen. Du hast 30 Sekunden pro Frage.</p>
-
   <div id="quizGame">
     <div class="quiz-header">
       <div class="quiz-progress" id="quizProgress">Frage 1 / 20</div>
@@ -1230,7 +475,6 @@ body {
     <div class="quiz-feedback" id="quizFeedback"></div>
     <button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuestion()">Nächste Frage →</button>
   </div>
-
   <div class="quiz-result" id="quizResult">
     <div class="big-score" id="resultScore">0/20</div>
     <div class="score-label">Richtige Antworten</div>
@@ -1239,14 +483,12 @@ body {
   </div>
 </section>
 
-<!-- ═══ LÜCKENTEXT ══════════════════════════════════════════════ -->
 <section id="luecken" class="section">
   <h1 class="section-title">✏️ Lückentext</h1>
   <p class="section-sub">Fülle die Lücken aus. Drücke "Prüfen" um deine Antworten zu kontrollieren.</p>
   <div id="lueckenContainer"></div>
 </section>
 
-<!-- ═══ GLOSSAR ════════════════════════════════════════════════ -->
 <section id="glossar" class="section">
   <h1 class="section-title">📚 Glossar</h1>
   <p class="section-sub">Alle wichtigen Begriffe auf einen Blick. Suche nach Stichworten.</p>
@@ -1258,7 +500,7 @@ body {
 
 <script>
 // ════════════════════════════════════════════════
-// SUPABASE AUTH
+// SUPABASE AUTH — FIXED VERSION
 // ════════════════════════════════════════════════
 const SUPABASE_URL = 'https://yizqvzediezyntupzawq.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_wIg4p4qWvZcid0gCOAXurQ_JC9AtTeI';
@@ -1278,7 +520,7 @@ async function initAuth() {
   }
 
   sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
+    if (event === 'SIGNED_IN' && session && !currentUser) {
       currentUser = session.user;
       await loadProfile();
       showApp();
@@ -1290,8 +532,11 @@ async function initAuth() {
   });
 }
 
+// FIX 1: loadProfile now falls back to auth metadata if profile missing
 async function loadProfile() {
-  const { data } = await sb
+  if (!currentUser) return;
+
+  const { data, error } = await sb
     .from('profiles')
     .select('*')
     .eq('id', currentUser.id)
@@ -1304,11 +549,31 @@ async function loadProfile() {
     quizHighscore = data.quiz_highscore || 0;
     document.getElementById('scoreDisplay').textContent = `⭐ ${score} Punkte`;
     updateProgress();
+  } else {
+    // Profile not found — create it now using auth metadata username
+    const metaUsername = currentUser.user_metadata?.username;
+    if (metaUsername) {
+      const { data: inserted, error: insertErr } = await sb.from('profiles').insert({
+        id: currentUser.id,
+        username: metaUsername,
+        score: 0,
+        known_cards: '[]',
+        quiz_highscore: 0
+      }).select().single();
+
+      if (inserted) {
+        currentProfile = inserted;
+      } else {
+        console.error('Profile insert in loadProfile failed:', insertErr);
+        // Last resort fallback
+        currentProfile = { username: metaUsername, score: 0, known_cards: '[]', quiz_highscore: 0 };
+      }
+    }
   }
 }
 
 async function saveProfile() {
-  if (!currentUser) { console.warn('saveProfile: kein User'); return; }
+  if (!currentUser) return;
   const payload = {
     id: currentUser.id,
     score: score,
@@ -1316,16 +581,17 @@ async function saveProfile() {
     quiz_highscore: quizHighscore,
     updated_at: new Date().toISOString()
   };
-  console.log('saveProfile called', payload);
-  const { data, error } = await sb.from('profiles').upsert(payload);
+  const { error } = await sb.from('profiles').upsert(payload);
   if (error) console.error('saveProfile ERROR:', error);
-  else console.log('saveProfile OK', data);
 }
 
+// FIX 2: showApp uses ONLY currentProfile.username, no email fallback
 function showApp() {
   document.getElementById('authOverlay').style.display = 'none';
   document.getElementById('userInfo').style.display = 'flex';
-  const name = currentProfile?.username || currentUser.email.split('@')[0];
+
+  // Use profile username — no email fallback
+  const name = currentProfile?.username || '?';
   document.getElementById('userNameDisplay').textContent = name;
   document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
   renderCards();
@@ -1344,21 +610,17 @@ async function doLogin() {
   const password = document.getElementById('loginPassword').value;
   const errEl = document.getElementById('loginError');
   const btn = document.getElementById('loginBtn');
-
   if (!email || !password) { showAuthError(errEl, 'Bitte alle Felder ausfüllen.'); return; }
-  btn.disabled = true;
-  btn.textContent = 'Wird angemeldet...';
-  errEl.style.display = 'none';
-
+  btn.disabled = true; btn.textContent = 'Wird angemeldet...'; errEl.style.display = 'none';
   const { error } = await sb.auth.signInWithPassword({ email, password });
   if (error) {
-    showAuthError(errEl, error.message === 'Invalid login credentials'
-      ? 'E-Mail oder Passwort falsch.' : error.message);
-    btn.disabled = false;
-    btn.textContent = 'Anmelden →';
+    showAuthError(errEl, error.message === 'Invalid login credentials' ? 'E-Mail oder Passwort falsch.' : error.message);
+    btn.disabled = false; btn.textContent = 'Anmelden →';
   }
+  // On success: onAuthStateChange handles the rest
 }
 
+// FIX 3: doRegister stores username in auth metadata AND inserts profile
 async function doRegister() {
   const username = document.getElementById('regUsername').value.trim();
   const email = document.getElementById('regEmail').value.trim();
@@ -1370,36 +632,44 @@ async function doRegister() {
   if (!username || !email || !password) { showAuthError(errEl, 'Bitte alle Felder ausfüllen.'); return; }
   if (password.length < 6) { showAuthError(errEl, 'Passwort muss mindestens 6 Zeichen haben.'); return; }
 
-  btn.disabled = true;
-  btn.textContent = 'Account wird erstellt...';
-  errEl.style.display = 'none';
-  sucEl.style.display = 'none';
+  btn.disabled = true; btn.textContent = 'Account wird erstellt...';
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
 
-  const { data, error } = await sb.auth.signUp({ email, password });
+  // Store username in auth metadata so loadProfile can recover it if insert fails
+  const { data, error } = await sb.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { username: username }  // stored in user_metadata
+    }
+  });
+
   if (error) {
     showAuthError(errEl, error.message);
-    btn.disabled = false;
-    btn.textContent = 'Account erstellen →';
+    btn.disabled = false; btn.textContent = 'Account erstellen →';
     return;
   }
 
   if (data.user) {
-    // Profil anlegen
-    await sb.from('profiles').insert({
+    // Insert profile — with a small delay to let auth settle
+    await new Promise(r => setTimeout(r, 300));
+    const { error: insertErr } = await sb.from('profiles').insert({
       id: data.user.id,
       username: username,
       score: 0,
       known_cards: '[]',
       quiz_highscore: 0
     });
+    if (insertErr) {
+      console.error('Profile insert during register failed:', insertErr);
+      // loadProfile will retry using metadata username on next login
+    }
   }
 
   sucEl.textContent = '✓ Account erstellt! Du kannst dich jetzt anmelden.';
   sucEl.style.display = 'block';
-  btn.disabled = false;
-  btn.textContent = 'Account erstellen →';
+  btn.disabled = false; btn.textContent = 'Account erstellen →';
 
-  // Auto-Switch zu Login
   setTimeout(() => {
     document.getElementById('regEmail').value = email;
     switchAuthTab('login', document.querySelectorAll('.auth-tab')[0]);
@@ -1416,7 +686,6 @@ function showAuthError(el, msg) {
   el.style.display = 'block';
 }
 
-// Enter-Taste in Login-Feldern
 document.addEventListener('DOMContentLoaded', () => {
   ['loginEmail','loginPassword'].forEach(id => {
     document.getElementById(id)?.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
@@ -1437,7 +706,6 @@ let currentCardIndex = 0;
 let currentFilter = 'alle';
 let filteredCards = [];
 let cardFlipped = false;
-
 let quizQuestions = [];
 let currentQuizIndex = 0;
 let quizScore = 0;
@@ -1449,7 +717,6 @@ let questionAnswered = false;
 // DATA — FLASHCARDS
 // ════════════════════════════════════════════════
 const allCards = [
-  // SCHUTZZIELE
   { cat: 'schutzziele', q: 'Was bedeutet Vertraulichkeit?', a: '<strong>Schutz vor unbefugter Preisgabe.</strong><br>Nur Befugte dürfen auf Daten zugreifen.<br><br><span class="highlight">Verletzt wenn:</span> Kundendaten offen im Büro, Flipchart nicht gelöscht, jemand schaut beim Passwort zu.' },
   { cat: 'schutzziele', q: 'Was bedeutet Integrität?', a: '<strong>Sicherstellung der Korrektheit und Unversehrtheit.</strong><br>Daten vollständig und unverändert — auch Autor und Zeitstempel!<br><br><span class="highlight">Verletzt wenn:</span> Messdaten manipuliert, Rechnung geändert, Zeitstempel gefälscht.' },
   { cat: 'schutzziele', q: 'Was bedeutet Verfügbarkeit?', a: '<strong>System/Daten nutzbar wenn gebraucht.</strong><br>≠ permanent online!<br><br><span class="warn">Prüfungsfalle:</span> Gehaltsabrechnung muss nur 1× im Monat verfügbar sein.<br><br><span class="highlight">Verletzt wenn:</span> Server fällt aus, Ransomware, DDoS.' },
@@ -1458,24 +725,20 @@ const allCards = [
   { cat: 'schutzziele', q: 'Was bedeutet Nichtabstreitbarkeit?', a: '<strong>Herkunft:</strong> Absender kann das Senden nicht leugnen.<br><strong>Erhalt:</strong> Empfänger kann den Empfang nicht leugnen.<br><br>Ziel: Versand und Empfang können nicht in Abrede gestellt werden.' },
   { cat: 'schutzziele', q: 'Was ist Verbindlichkeit?', a: 'Kombination aus <strong>Authentizität + Nichtabstreitbarkeit.</strong><br><br>Handlungen sind eindeutig zuordenbar und können nicht abgestritten werden.' },
   { cat: 'schutzziele', q: 'Was ist Zuverlässigkeit?', a: 'Technische <strong>Funktionsfähigkeit von IT-Systemen</strong> und Komponenten.<br><br>Ergänzung zur Verfügbarkeit bei hoher IT-Abhängigkeit.' },
-  // DSGVO
   { cat: 'dsgvo', q: 'Wann trat die DSGVO in Kraft und was regelt sie?', a: 'Seit <strong>2018</strong>, gilt <strong>EU-weit.</strong><br>Schützt personenbezogene Daten.<br>Kernprinzip: <span class="highlight">Recht auf informationelle Selbstbestimmung.</span>' },
   { cat: 'dsgvo', q: 'Was ist das BDSG und welche Stellung hat es zur DSGVO?', a: '<strong>Bundesdatenschutzgesetz</strong> — deutsches Ergänzungsgesetz.<br><br>Ergänzende Stellung: konkretisiert die DSGVO für Deutschland, <span class="warn">widerspricht ihr nicht.</span><br>Füllt Lücken über Öffnungsklauseln.' },
   { cat: 'dsgvo', q: 'Nenne die wichtigsten Betroffenenrechte nach DSGVO (Art. 12–20)', a: '• <strong>Auskunft</strong> (Art. 15) — Welche Daten habt ihr?<br>• <strong>Berichtigung</strong> (Art. 16) — Falsche Daten korrigieren<br>• <strong>Löschung</strong> (Art. 17) — Recht auf Vergessen<br>• <strong>Einschränkung</strong> (Art. 18) — Nur begrenzte Nutzung<br>• <strong>Übertragbarkeit</strong> (Art. 20) — An andere übermitteln<br>• <strong>Widerspruch</strong> (Art. 21) — z.B. Werbung' },
   { cat: 'dsgvo', q: 'Ein Unternehmen löscht keine Kundendaten auf Verlangen. Welches Recht wurde verletzt?', a: '<strong>Recht auf Löschung</strong> (Art. 17 DSGVO)<br><br>Auch genannt: "Recht auf Vergessen".<br>Daten müssen gelöscht werden wenn sie für den Zweck nicht mehr nötig sind.' },
   { cat: 'dsgvo', q: 'Ein Kunde will wissen welche Daten das Unternehmen über ihn hat. Welches Recht?', a: '<strong>Recht auf Auskunft</strong> (Art. 15 DSGVO)<br><br>Jede Person darf fragen: "Welche Daten habt ihr von mir?"' },
-  // ISO / BSI
   { cat: 'iso', q: 'Was ist ISO 27001?', a: 'Internationaler Standard für <strong>Informationssicherheits-Managementsysteme (ISMS).</strong><br><br>Unternehmen können sich danach zertifizieren lassen.' },
   { cat: 'iso', q: 'Was ist das BSI?', a: '<strong>Bundesamt für Sicherheit in der Informationstechnik</strong><br><br>Gibt den IT-Grundschutz vor — eine Methode zur systematischen Erstellung von Sicherheitskonzepten.' },
   { cat: 'iso', q: 'Was sind TOM?', a: '<strong>Technisch-Organisatorische Maßnahmen</strong><br><br>Beispiele:<br>• Physische Gebäudesicherung<br>• Netzwerk-Schnittstellen absichern<br>• Berechtigungsmanagement<br>• Verschlüsselung<br>• Backups<br>• Virenschutz' },
   { cat: 'iso', q: 'Nenne die 5 Schritte des BSI-Sicherheitskonzepts in richtiger Reihenfolge', a: '1. <strong>Analyse des IT-Zustandes</strong><br>2. <strong>Schutzbedarfsfeststellung</strong><br>3. <strong>Auswahl der Sicherheitsanforderungen</strong><br>4. <strong>Realisierung der Maßnahmen</strong><br>5. <strong>Aufrechterhaltung & kontinuierliche Verbesserung</strong>' },
   { cat: 'iso', q: 'Unterschied: Sicherheitsleitlinie vs. Sicherheitskonzept?', a: '<strong>Sicherheitsleitlinie:</strong> Das übergeordnete Dokument. Was & Warum? Ziele und Prinzipien.<br><br><strong>Sicherheitskonzept:</strong> Die konkrete Umsetzung. Wie? Maßnahmen und Systeme.' },
-  // ROLLEN
   { cat: 'rollen', q: 'Was macht der ISB (IT-Sicherheitsbeauftragter)?', a: '• Sicherheitskonzept <strong>koordinieren</strong><br>• Risikoanalysen durchführen<br>• Sicherheitsrelevante Projekte koordinieren<br>• Vorfälle untersuchen<br>• Schulungen initiieren<br>• An Leitungsebene berichten<br><br><span class="warn">Er koordiniert — er konfiguriert NICHT selbst!</span>' },
   { cat: 'rollen', q: 'Was macht der DSB (Datenschutzbeauftragter)?', a: '• DSGVO-Einhaltung <strong>überwachen</strong><br>• Beraten und kontrollieren<br>• Eng mit ISB zusammenarbeiten<br>• Datenschutzrelevante Vorgänge begleiten<br>• Unternehmensleitung beim Persönlichkeitsschutz unterstützen' },
   { cat: 'rollen', q: 'Was macht der IT-Beauftragte?', a: '• IT-Komponenten <strong>beschaffen</strong><br>• Einbindung in IT-Infrastruktur sicherstellen<br>• Funktionsfähigkeit der IT überwachen<br>• IT-Einsatz organisieren<br>• Bei IT-Sicherheitsrichtlinie mitwirken' },
   { cat: 'rollen', q: 'Prüfungsfalle: Was macht der ISB NICHT?', a: '<span class="warn">Der ISB macht NICHT:</span><br>• ❌ Sicherheitstechnik selbst konfigurieren<br>• ❌ Presseanfragen beantworten<br>• ❌ Einkauf von Antivirensoftware leiten<br><br><span class="highlight">Er KOORDINIERT — er macht nicht selbst!</span>' },
-  // SERVICE
   { cat: 'service', q: 'Was ist ein Service Request?', a: '<strong>Normale Standardanfrage</strong> — kein Notfall, Betrieb läuft noch normal.<br><br>Meldet ein <span class="highlight">Mensch der etwas haben will.</span><br><br>Beispiele: CAD-Lizenz läuft aus, Angebotsanfrage für Notebooks, Reklamation.' },
   { cat: 'service', q: 'Was ist ein Incident?', a: '<strong>Ungeplante Störung</strong> die den Betrieb beeinträchtigt.<br><br>Meldet ein <span class="highlight">Mensch der eine Störung meldet.</span><br><br>Beispiele: Drucker geht nicht, WLAN weg, Maus defekt, Webseite leitet um, Tablet startet nicht.' },
   { cat: 'service', q: 'Was ist ein Event?', a: '<strong>Automatisches Systemereignis</strong> — kann positiv ODER negativ sein.<br><br>Meldet das <span class="highlight">System selbst (automatisch).</span><br><br>Beispiele: Backup erfolgreich, Speicher unter 10%, Controller unreachable, Portsecurity-Verletzung.' },
@@ -1483,7 +746,6 @@ const allCards = [
   { cat: 'service', q: 'Ticket #84507: "Im Konferenzraum kein WLAN" — welche Kategorie?', a: '<strong>Incident</strong><br><br>Ungeplante Störung die den Betrieb beeinträchtigt. Ein Mensch meldet die Störung aktiv.' },
   { cat: 'service', q: 'Ticket #84501: "CAD-Lizenz läuft nächsten Monat aus" — welche Kategorie?', a: '<strong>Service Request</strong><br><br>Normale Anfrage, kein akuter Notfall, der Betrieb läuft noch normal.' },
   { cat: 'service', q: 'Ticket #84512: "100 Login-Anfragen mit ungültiger Authentifizierung" — welche Kategorie?', a: '<strong>Event</strong><br><br>Automatisch generierte Sicherheitsmeldung des Systems. Hinweis auf möglichen Angriff.' },
-  // SUPPORT
   { cat: 'support', q: 'Was ist der First-Level-Support (FLS)?', a: '• <strong>Erste Anlaufstelle</strong> für Kunden (SPOC)<br>• Nimmt Tickets auf, löst einfache Probleme<br>• Breites aber nicht tiefes Fachwissen<br>• Mo–Fr, 8–18 Uhr<br>• Kanäle: Telefon, E-Mail, Chat, Webticket' },
   { cat: 'support', q: 'Was passiert bei einer Eskalation?', a: 'Wenn der FLS <strong>keine Lösung anbieten kann</strong>, wird der <span class="highlight">Second-Level-Support (SLS)</span> beauftragt.<br><br>Ziel der Trennung: Fachleute von einfachen Anfragen freihalten.' },
   { cat: 'support', q: 'Was bedeutet SPOC?', a: '<strong>Single Point of Contact</strong><br><br>Der Helpdesk ist der <span class="highlight">EINZIGE Anlaufpunkt</span> für Kunden. Alle Anfragen laufen hier ein.' },
@@ -1524,44 +786,32 @@ const allQuizQuestions = [
 // DATA — LÜCKENTEXT
 // ════════════════════════════════════════════════
 const lueckenData = [
-  {
-    title: '🔐 Schutzziele',
-    sentences: [
-      { text: ['Die drei primären Schutzziele sind ', {blank: 'Vertraulichkeit', size: 14}, ', ', {blank: 'Integrität', size: 10}, ' und ', {blank: 'Verfügbarkeit', size: 13}, '.'] },
-      { text: ['Vertraulichkeit bedeutet: Nur ', {blank: 'Befugte', size: 8}, ' dürfen auf Daten zugreifen.'] },
-      { text: ['Verfügbarkeit bedeutet NICHT "permanent online", sondern verfügbar wenn sie ', {blank: 'gebraucht', size: 9}, ' werden.'] },
-      { text: ['Das erweiterte Schutzzielsystem wird ', {blank: 'VIVA', size: 5}, '-Prinzip genannt.'] },
-    ]
-  },
-  {
-    title: '📜 DSGVO',
-    sentences: [
-      { text: ['Die DSGVO trat ', {blank: '2018', size: 5}, ' in Kraft und gilt ', {blank: 'EU-weit', size: 8}, '.'] },
-      { text: ['Das ', {blank: 'BDSG', size: 5}, ' ist das deutsche Ergänzungsgesetz zur DSGVO.'] },
-      { text: ['Das Recht auf ', {blank: 'Löschung', size: 9}, ' wird auch "Recht auf Vergessen" genannt.'] },
-      { text: ['Das Recht auf ', {blank: 'Auskunft', size: 9}, ' erlaubt zu fragen: "Welche Daten habt ihr von mir?"'] },
-    ]
-  },
-  {
-    title: '👤 Rollen',
-    sentences: [
-      { text: ['Der ', {blank: 'ISB', size: 4}, ' koordiniert das Sicherheitskonzept — er konfiguriert NICHT selbst.'] },
-      { text: ['Der ', {blank: 'DSB', size: 4}, ' überwacht die Einhaltung der DSGVO im Unternehmen.'] },
-      { text: ['', {blank: 'TOM', size: 4}, ' steht für Technisch-Organisatorische Maßnahmen.'] },
-      { text: ['', {blank: 'ISO 27001', size: 10}, ' ist der internationale Standard für Informationssicherheits-Managementsysteme.'] },
-    ]
-  },
-  {
-    title: '🎫 Service / Support',
-    sentences: [
-      { text: ['Ein ', {blank: 'Event', size: 6}, ' ist ein automatisches Systemereignis — das System meldet es selbst.'] },
-      { text: ['Ein ', {blank: 'Incident', size: 8}, ' ist eine ungeplante Störung, die den Betrieb beeinträchtigt.'] },
-      { text: ['', {blank: 'SPOC', size: 5}, ' steht für Single Point of Contact.'] },
-      { text: ['Der Expresszuschlag beträgt ', {blank: '+50%', size: 5}, ' auf den regulären Stundensatz.'] },
-      { text: ['Gold (SL3) hat eine Reaktionszeit von ', {blank: '2 Arbeitsstunden', size: 16}, '.'] },
-      { text: ['Bei Bronze (SL1) dauert die Entstörung maximal ', {blank: '5 Tage', size: 7}, '.'] },
-    ]
-  }
+  { title: '🔐 Schutzziele', sentences: [
+    { text: ['Die drei primären Schutzziele sind ', {blank: 'Vertraulichkeit', size: 14}, ', ', {blank: 'Integrität', size: 10}, ' und ', {blank: 'Verfügbarkeit', size: 13}, '.'] },
+    { text: ['Vertraulichkeit bedeutet: Nur ', {blank: 'Befugte', size: 8}, ' dürfen auf Daten zugreifen.'] },
+    { text: ['Verfügbarkeit bedeutet NICHT "permanent online", sondern verfügbar wenn sie ', {blank: 'gebraucht', size: 9}, ' werden.'] },
+    { text: ['Das erweiterte Schutzzielsystem wird ', {blank: 'VIVA', size: 5}, '-Prinzip genannt.'] },
+  ]},
+  { title: '📜 DSGVO', sentences: [
+    { text: ['Die DSGVO trat ', {blank: '2018', size: 5}, ' in Kraft und gilt ', {blank: 'EU-weit', size: 8}, '.'] },
+    { text: ['Das ', {blank: 'BDSG', size: 5}, ' ist das deutsche Ergänzungsgesetz zur DSGVO.'] },
+    { text: ['Das Recht auf ', {blank: 'Löschung', size: 9}, ' wird auch "Recht auf Vergessen" genannt.'] },
+    { text: ['Das Recht auf ', {blank: 'Auskunft', size: 9}, ' erlaubt zu fragen: "Welche Daten habt ihr von mir?"'] },
+  ]},
+  { title: '👤 Rollen', sentences: [
+    { text: ['Der ', {blank: 'ISB', size: 4}, ' koordiniert das Sicherheitskonzept — er konfiguriert NICHT selbst.'] },
+    { text: ['Der ', {blank: 'DSB', size: 4}, ' überwacht die Einhaltung der DSGVO im Unternehmen.'] },
+    { text: ['', {blank: 'TOM', size: 4}, ' steht für Technisch-Organisatorische Maßnahmen.'] },
+    { text: ['', {blank: 'ISO 27001', size: 10}, ' ist der internationale Standard für Informationssicherheits-Managementsysteme.'] },
+  ]},
+  { title: '🎫 Service / Support', sentences: [
+    { text: ['Ein ', {blank: 'Event', size: 6}, ' ist ein automatisches Systemereignis — das System meldet es selbst.'] },
+    { text: ['Ein ', {blank: 'Incident', size: 8}, ' ist eine ungeplante Störung, die den Betrieb beeinträchtigt.'] },
+    { text: ['', {blank: 'SPOC', size: 5}, ' steht für Single Point of Contact.'] },
+    { text: ['Der Expresszuschlag beträgt ', {blank: '+50%', size: 5}, ' auf den regulären Stundensatz.'] },
+    { text: ['Gold (SL3) hat eine Reaktionszeit von ', {blank: '2 Arbeitsstunden', size: 16}, '.'] },
+    { text: ['Bei Bronze (SL1) dauert die Entstörung maximal ', {blank: '5 Tage', size: 7}, '.'] },
+  ]},
 ];
 
 // ════════════════════════════════════════════════
@@ -1629,11 +879,7 @@ function setFilter(filter, btn) {
 }
 
 function renderCards() {
-  if (currentFilter === 'alle') {
-    filteredCards = [...allCards];
-  } else {
-    filteredCards = allCards.filter(c => c.cat === currentFilter);
-  }
+  filteredCards = currentFilter === 'alle' ? [...allCards] : allCards.filter(c => c.cat === currentFilter);
   if (currentCardIndex >= filteredCards.length) currentCardIndex = 0;
   updateCard();
   renderDots();
@@ -1647,7 +893,6 @@ function updateCard() {
   document.getElementById('fcQuestion').innerHTML = card.q;
   document.getElementById('fcAnswer').innerHTML = card.a;
   document.getElementById('fcCounter').textContent = `Karte ${currentCardIndex + 1} / ${filteredCards.length}`;
-  // reset flip
   cardFlipped = false;
   document.getElementById('flashcard').classList.remove('flipped');
   updateProgress();
@@ -1658,24 +903,14 @@ function flipCard() {
   document.getElementById('flashcard').classList.toggle('flipped', cardFlipped);
 }
 
-function nextCard() {
-  currentCardIndex = (currentCardIndex + 1) % filteredCards.length;
-  updateCard();
-}
-
-function prevCard() {
-  currentCardIndex = (currentCardIndex - 1 + filteredCards.length) % filteredCards.length;
-  updateCard();
-}
+function nextCard() { currentCardIndex = (currentCardIndex + 1) % filteredCards.length; updateCard(); }
+function prevCard() { currentCardIndex = (currentCardIndex - 1 + filteredCards.length) % filteredCards.length; updateCard(); }
 
 function markCard(known) {
   const idx = allCards.indexOf(filteredCards[currentCardIndex]);
   if (known) { knownCards.add(idx); unknownCards.delete(idx); addScore(5); }
   else { unknownCards.add(idx); knownCards.delete(idx); }
-  renderDots();
-  updateProgress();
-  saveProfile();
-  nextCard();
+  renderDots(); updateProgress(); saveProfile(); nextCard();
 }
 
 function shuffleCards() {
@@ -1683,9 +918,7 @@ function shuffleCards() {
     const j = Math.floor(Math.random() * (i + 1));
     [filteredCards[i], filteredCards[j]] = [filteredCards[j], filteredCards[i]];
   }
-  currentCardIndex = 0;
-  updateCard();
-  renderDots();
+  currentCardIndex = 0; updateCard(); renderDots();
 }
 
 function renderDots() {
@@ -1708,9 +941,7 @@ function renderDots() {
 // ════════════════════════════════════════════════
 function startQuiz() {
   clearInterval(quizTimer);
-  quizScore = 0;
-  currentQuizIndex = 0;
-  questionAnswered = false;
+  quizScore = 0; currentQuizIndex = 0; questionAnswered = false;
   quizQuestions = [...allQuizQuestions].sort(() => Math.random() - 0.5).slice(0, 20);
   document.getElementById('quizResult').classList.remove('show');
   document.getElementById('quizGame').style.display = 'block';
@@ -1718,9 +949,7 @@ function startQuiz() {
 }
 
 function renderQuestion() {
-  if (currentQuizIndex >= quizQuestions.length) {
-    showQuizResult(); return;
-  }
+  if (currentQuizIndex >= quizQuestions.length) { showQuizResult(); return; }
   questionAnswered = false;
   const q = quizQuestions[currentQuizIndex];
   document.getElementById('quizProgress').textContent = `Frage ${currentQuizIndex + 1} / ${quizQuestions.length}`;
@@ -1728,7 +957,6 @@ function renderQuestion() {
   document.getElementById('quizQuestion').textContent = q.q;
   document.getElementById('quizFeedback').className = 'quiz-feedback';
   document.getElementById('quizNextBtn').className = 'quiz-next-btn';
-
   const opts = document.getElementById('quizOptions');
   opts.innerHTML = '';
   const letters = ['A', 'B', 'C', 'D'];
@@ -1739,40 +967,31 @@ function renderQuestion() {
     btn.onclick = () => answerQuestion(i, btn);
     opts.appendChild(btn);
   });
-
   startTimer();
 }
 
 function startTimer() {
-  clearInterval(quizTimer);
-  timerVal = 30;
+  clearInterval(quizTimer); timerVal = 30;
   document.getElementById('quizTimer').textContent = `⏱ ${timerVal}`;
   quizTimer = setInterval(() => {
     timerVal--;
     document.getElementById('quizTimer').textContent = `⏱ ${timerVal}`;
     if (timerVal <= 10) document.getElementById('quizTimer').style.color = 'var(--accent3)';
     else document.getElementById('quizTimer').style.color = 'var(--accent5)';
-    if (timerVal <= 0) {
-      clearInterval(quizTimer);
-      if (!questionAnswered) answerQuestion(-1, null);
-    }
+    if (timerVal <= 0) { clearInterval(quizTimer); if (!questionAnswered) answerQuestion(-1, null); }
   }, 1000);
 }
 
 function answerQuestion(chosen, clickedBtn) {
   if (questionAnswered) return;
-  questionAnswered = true;
-  clearInterval(quizTimer);
-
+  questionAnswered = true; clearInterval(quizTimer);
   const q = quizQuestions[currentQuizIndex];
   const opts = document.querySelectorAll('.quiz-option');
   opts.forEach(b => b.disabled = true);
   opts[q.correct].classList.add('correct');
-
   const fb = document.getElementById('quizFeedback');
   if (chosen === q.correct) {
-    quizScore++;
-    addScore(10);
+    quizScore++; addScore(10);
     if (clickedBtn) clickedBtn.classList.add('correct');
     fb.textContent = `✓ Richtig! ${q.explanation}`;
     fb.className = 'quiz-feedback correct show';
@@ -1781,14 +1000,10 @@ function answerQuestion(chosen, clickedBtn) {
     fb.textContent = `✗ Leider falsch. ${q.explanation}`;
     fb.className = 'quiz-feedback wrong show';
   }
-
   document.getElementById('quizNextBtn').className = 'quiz-next-btn show';
 }
 
-function nextQuestion() {
-  currentQuizIndex++;
-  renderQuestion();
-}
+function nextQuestion() { currentQuizIndex++; renderQuestion(); }
 
 function showQuizResult() {
   clearInterval(quizTimer);
@@ -1797,18 +1012,12 @@ function showQuizResult() {
   res.classList.add('show');
   const pct = Math.round((quizScore / quizQuestions.length) * 100);
   document.getElementById('resultScore').textContent = `${quizScore}/${quizQuestions.length}`;
-
-  if (quizScore > quizHighscore) {
-    quizHighscore = quizScore;
-    saveProfile();
-  }
-
+  if (quizScore > quizHighscore) { quizHighscore = quizScore; saveProfile(); }
   let msg, color;
   if (pct >= 90) { msg = 'Ausgezeichnet! Du bist bereit für die Prüfung! 🏆'; color = 'var(--accent2)'; }
   else if (pct >= 70) { msg = 'Gut gemacht! Noch ein bisschen üben und du schaffst das! 💪'; color = 'var(--accent5)'; }
   else if (pct >= 50) { msg = 'Solide Basis! Schau dir die Lernkarten nochmal an. 📚'; color = 'var(--accent)'; }
   else { msg = 'Nochmal durcharbeiten — du schaffst das! Die Lernkarten helfen. 🔄'; color = 'var(--accent3)'; }
-
   document.getElementById('resultScore').style.color = color;
   document.getElementById('resultMsg').textContent = msg;
 }
@@ -1823,7 +1032,6 @@ function renderLuecken() {
     const card = document.createElement('div');
     card.className = 'fill-card';
     card.innerHTML = `<h3>${block.title}</h3>`;
-
     block.sentences.forEach((sentence, si) => {
       const p = document.createElement('p');
       p.className = 'fill-sentence';
@@ -1832,12 +1040,10 @@ function renderLuecken() {
           p.appendChild(document.createTextNode(part));
         } else {
           const inp = document.createElement('input');
-          inp.type = 'text';
-          inp.className = 'fill-input';
+          inp.type = 'text'; inp.className = 'fill-input';
           inp.style.width = (part.size * 12) + 'px';
           inp.dataset.answer = part.blank.toLowerCase();
-          inp.dataset.block = bi;
-          inp.dataset.sentence = si;
+          inp.dataset.block = bi; inp.dataset.sentence = si;
           inp.placeholder = '...';
           inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkBlock(bi); });
           p.appendChild(inp);
@@ -1845,18 +1051,13 @@ function renderLuecken() {
       });
       card.appendChild(p);
     });
-
     const btn = document.createElement('button');
-    btn.className = 'fill-check-btn';
-    btn.textContent = '✓ Prüfen';
+    btn.className = 'fill-check-btn'; btn.textContent = '✓ Prüfen';
     btn.onclick = () => checkBlock(bi);
     card.appendChild(btn);
-
     const result = document.createElement('div');
-    result.className = 'fill-result';
-    result.id = `fill-result-${bi}`;
+    result.className = 'fill-result'; result.id = `fill-result-${bi}`;
     card.appendChild(result);
-
     container.appendChild(card);
   });
 }
@@ -1873,8 +1074,7 @@ function checkBlock(bi) {
   const res = document.getElementById(`fill-result-${bi}`);
   if (correct === inputs.length) {
     res.textContent = `✓ Perfekt! Alle ${inputs.length} Lücken richtig!`;
-    res.className = 'fill-result ok show';
-    addScore(correct * 3);
+    res.className = 'fill-result ok show'; addScore(correct * 3);
   } else {
     res.textContent = `✗ ${correct} von ${inputs.length} richtig. Falsche Lücken sind rot markiert.`;
     res.className = 'fill-result nok show';
@@ -1898,7 +1098,6 @@ function renderGlossar(filter = '') {
     grid.appendChild(item);
   });
 }
-
 function filterGlossar(val) { renderGlossar(val); }
 
 // ════════════════════════════════════════════════
