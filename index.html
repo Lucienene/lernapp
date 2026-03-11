@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lernapp — Datensicherheit & Serviceanfragen</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --bg: #0d1117;
@@ -688,6 +689,161 @@ body {
 }
 .section-sub { font-size: 0.85rem; color: var(--text2); margin-bottom: 24px; }
 
+/* ─── AUTH OVERLAY ───────────────────────────── */
+#authOverlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.auth-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  animation: fadeIn 0.4s ease;
+}
+.auth-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 6px;
+}
+.auth-sub {
+  font-size: 0.82rem;
+  color: var(--text2);
+  text-align: center;
+  margin-bottom: 32px;
+}
+.auth-tabs {
+  display: flex;
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+.auth-tab {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.auth-tab.active {
+  background: var(--accent);
+  color: #0d1117;
+  font-weight: 700;
+}
+.auth-field {
+  margin-bottom: 16px;
+}
+.auth-field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.auth-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.auth-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(88,166,255,0.1); }
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #0d1117;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: opacity 0.15s;
+}
+.auth-btn:hover { opacity: 0.85; }
+.auth-btn:disabled { opacity: 0.5; cursor: default; }
+.auth-error {
+  background: var(--card-red);
+  border: 1px solid var(--accent3);
+  color: var(--accent3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  margin-top: 12px;
+  display: none;
+}
+.auth-success {
+  background: var(--card-green);
+  border: 1px solid var(--accent2);
+  color: var(--accent2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  margin-top: 12px;
+  display: none;
+}
+.auth-loading {
+  text-align: center;
+  color: var(--text2);
+  font-size: 0.85rem;
+  padding: 20px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0d1117;
+}
+.logout-btn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.logout-btn:hover { border-color: var(--accent3); color: var(--accent3); }
+
 /* scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
@@ -697,17 +853,70 @@ body {
 </head>
 <body>
 
+<!-- ═══ AUTH OVERLAY ════════════════════════════════════════════ -->
+<div id="authOverlay">
+  <div class="auth-box">
+    <div class="auth-logo">Lernapp</div>
+    <div class="auth-sub">wie geil bist du in BfK-B?</div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login', this)">Anmelden</button>
+      <button class="auth-tab" onclick="switchAuthTab('register', this)">Registrieren</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="loginForm">
+      <div class="auth-field">
+        <label>E-Mail</label>
+        <input type="email" class="auth-input" id="loginEmail" placeholder="deine@email.de" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>Passwort</label>
+        <input type="password" class="auth-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="auth-btn" onclick="doLogin()" id="loginBtn">Anmelden →</button>
+      <div class="auth-error" id="loginError"></div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerForm" style="display:none;">
+      <div class="auth-field">
+        <label>Benutzername</label>
+        <input type="text" class="auth-input" id="regUsername" placeholder="z.B. lucien123" autocomplete="username">
+      </div>
+      <div class="auth-field">
+        <label>E-Mail</label>
+        <input type="email" class="auth-input" id="regEmail" placeholder="deine@email.de" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>Passwort</label>
+        <input type="password" class="auth-input" id="regPassword" placeholder="Mind. 6 Zeichen" autocomplete="new-password">
+      </div>
+      <button class="auth-btn" onclick="doRegister()" id="registerBtn">Account erstellen →</button>
+      <div class="auth-error" id="registerError"></div>
+      <div class="auth-success" id="registerSuccess"></div>
+    </div>
+  </div>
+</div>
+
 <header class="header">
   <div class="logo">
     Lernapp
-    <span>Datensicherheit & Serviceanfragen — LF6 BFK-I</span>
+    <span>wie geil bist du in BfK-B?</span>
   </div>
   <div class="progress-bar-wrap">
     <span class="progress-label">Karten gelernt</span>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     <span class="progress-label" id="progressText">0 / 0</span>
   </div>
-  <div class="score-badge" id="scoreDisplay">⭐ 0 Punkte</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="score-badge" id="scoreDisplay">⭐ 0 Punkte</div>
+    <div class="user-info" id="userInfo" style="display:none;">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <span style="font-size:0.8rem;color:var(--text2);" id="userNameDisplay"></span>
+      <button class="logout-btn" onclick="doLogout()">Abmelden</button>
+    </div>
+  </div>
 </header>
 
 <nav class="nav-tabs">
@@ -1049,9 +1258,175 @@ body {
 
 <script>
 // ════════════════════════════════════════════════
+// SUPABASE AUTH
+// ════════════════════════════════════════════════
+const SUPABASE_URL = 'https://yizqvzediezyntupzawq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_wIg4p4qWvZcid0gCOAXurQ_JC9AtTeI';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentUser = null;
+let currentProfile = null;
+
+async function initAuth() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    await loadProfile();
+    showApp();
+  } else {
+    document.getElementById('authOverlay').style.display = 'flex';
+  }
+
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      currentUser = session.user;
+      await loadProfile();
+      showApp();
+    } else if (event === 'SIGNED_OUT') {
+      currentUser = null;
+      currentProfile = null;
+      location.reload();
+    }
+  });
+}
+
+async function loadProfile() {
+  const { data, error } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('id', currentUser.id)
+    .single();
+
+  if (data) {
+    currentProfile = data;
+    score = data.score || 0;
+    try { knownCards = new Set(JSON.parse(data.known_cards || '[]')); } catch(e) { knownCards = new Set(); }
+    quizHighscore = data.quiz_highscore || 0;
+    document.getElementById('scoreDisplay').textContent = `⭐ ${score} Punkte`;
+    updateProgress();
+  }
+}
+
+async function saveProfile() {
+  if (!currentUser) return;
+  await sb.from('profiles').upsert({
+    id: currentUser.id,
+    score: score,
+    known_cards: JSON.stringify([...knownCards]),
+    quiz_highscore: quizHighscore,
+    updated_at: new Date().toISOString()
+  });
+}
+
+function showApp() {
+  document.getElementById('authOverlay').style.display = 'none';
+  document.getElementById('userInfo').style.display = 'flex';
+  const name = currentProfile?.username || currentUser.email.split('@')[0];
+  document.getElementById('userNameDisplay').textContent = name;
+  document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+  renderCards();
+  updateProgress();
+}
+
+function switchAuthTab(tab, btn) {
+  document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  const btn = document.getElementById('loginBtn');
+
+  if (!email || !password) { showAuthError(errEl, 'Bitte alle Felder ausfüllen.'); return; }
+  btn.disabled = true;
+  btn.textContent = 'Wird angemeldet...';
+  errEl.style.display = 'none';
+
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    showAuthError(errEl, error.message === 'Invalid login credentials'
+      ? 'E-Mail oder Passwort falsch.' : error.message);
+    btn.disabled = false;
+    btn.textContent = 'Anmelden →';
+  }
+}
+
+async function doRegister() {
+  const username = document.getElementById('regUsername').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const errEl = document.getElementById('registerError');
+  const sucEl = document.getElementById('registerSuccess');
+  const btn = document.getElementById('registerBtn');
+
+  if (!username || !email || !password) { showAuthError(errEl, 'Bitte alle Felder ausfüllen.'); return; }
+  if (password.length < 6) { showAuthError(errEl, 'Passwort muss mindestens 6 Zeichen haben.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Account wird erstellt...';
+  errEl.style.display = 'none';
+  sucEl.style.display = 'none';
+
+  const { data, error } = await sb.auth.signUp({ email, password });
+  if (error) {
+    showAuthError(errEl, error.message);
+    btn.disabled = false;
+    btn.textContent = 'Account erstellen →';
+    return;
+  }
+
+  if (data.user) {
+    // Profil anlegen
+    await sb.from('profiles').insert({
+      id: data.user.id,
+      username: username,
+      score: 0,
+      known_cards: '[]',
+      quiz_highscore: 0
+    });
+  }
+
+  sucEl.textContent = '✓ Account erstellt! Du kannst dich jetzt anmelden.';
+  sucEl.style.display = 'block';
+  btn.disabled = false;
+  btn.textContent = 'Account erstellen →';
+
+  // Auto-Switch zu Login
+  setTimeout(() => {
+    document.getElementById('regEmail').value = email;
+    switchAuthTab('login', document.querySelectorAll('.auth-tab')[0]);
+  }, 1500);
+}
+
+async function doLogout() {
+  await saveProfile();
+  await sb.auth.signOut();
+}
+
+function showAuthError(el, msg) {
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// Enter-Taste in Login-Feldern
+document.addEventListener('DOMContentLoaded', () => {
+  ['loginEmail','loginPassword'].forEach(id => {
+    document.getElementById(id)?.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+  });
+  ['regUsername','regEmail','regPassword'].forEach(id => {
+    document.getElementById(id)?.addEventListener('keydown', e => { if(e.key==='Enter') doRegister(); });
+  });
+});
+
+// ════════════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════════════
 let score = 0;
+let quizHighscore = 0;
 let knownCards = new Set();
 let unknownCards = new Set();
 let currentCardIndex = 0;
@@ -1295,6 +1670,7 @@ function markCard(known) {
   else { unknownCards.add(idx); knownCards.delete(idx); }
   renderDots();
   updateProgress();
+  saveProfile();
   nextCard();
 }
 
@@ -1418,6 +1794,11 @@ function showQuizResult() {
   const pct = Math.round((quizScore / quizQuestions.length) * 100);
   document.getElementById('resultScore').textContent = `${quizScore}/${quizQuestions.length}`;
 
+  if (quizScore > quizHighscore) {
+    quizHighscore = quizScore;
+    saveProfile();
+  }
+
   let msg, color;
   if (pct >= 90) { msg = 'Ausgezeichnet! Du bist bereit für die Prüfung! 🏆'; color = 'var(--accent2)'; }
   else if (pct >= 70) { msg = 'Gut gemacht! Noch ein bisschen üben und du schaffst das! 💪'; color = 'var(--accent5)'; }
@@ -1522,6 +1903,7 @@ function filterGlossar(val) { renderGlossar(val); }
 function addScore(pts) {
   score += pts;
   document.getElementById('scoreDisplay').textContent = `⭐ ${score} Punkte`;
+  saveProfile();
 }
 
 function updateProgress() {
@@ -1533,9 +1915,8 @@ function updateProgress() {
 // ════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════
-renderCards();
 renderGlossar();
-updateProgress();
+initAuth();
 </script>
 </body>
 </html>
