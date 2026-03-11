@@ -1291,7 +1291,7 @@ async function initAuth() {
 }
 
 async function loadProfile() {
-  const { data, error } = await sb
+  const { data } = await sb
     .from('profiles')
     .select('*')
     .eq('id', currentUser.id)
@@ -1304,17 +1304,6 @@ async function loadProfile() {
     quizHighscore = data.quiz_highscore || 0;
     document.getElementById('scoreDisplay').textContent = `⭐ ${score} Punkte`;
     updateProgress();
-  } else {
-    // Kein Profil gefunden — leeres Profil anlegen mit E-Mail-Prefix als Fallback
-    const fallback = currentUser.email.split('@')[0];
-    const { data: newProfile } = await sb.from('profiles').insert({
-      id: currentUser.id,
-      username: fallback,
-      score: 0,
-      known_cards: '[]',
-      quiz_highscore: 0
-    }).select().single();
-    if (newProfile) currentProfile = newProfile;
   }
 }
 
