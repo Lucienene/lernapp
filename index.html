@@ -532,7 +532,6 @@ async function initAuth() {
   });
 }
 
-// FIX 1: loadProfile now falls back to auth metadata if profile missing
 async function loadProfile() {
   if (!currentUser) return;
 
@@ -550,22 +549,34 @@ async function loadProfile() {
     document.getElementById('scoreDisplay').textContent = `⭐ ${score} Punkte`;
     updateProgress();
   } else {
-    // Profile not found — create it now using auth metadata username
-    const metaUsername = currentUser.user_metadata?.username;
-    if (metaUsername) {
-      const { data: inserted, error: insertErr } = await sb.from('profiles').insert({
-        id: currentUser.id,
-        username: metaUsername,
-        score: 0,
-        known_cards: '[]',
-        quiz_highscore: 0
-      }).select().single();
+    console.warn('loadProfile: no data, error =', error?.message);
+    // Try to create profile from auth metadata, or fall back to email prefix
+    const metaUsername = currentUser.user_metadata?.username
+      || currentUser.email.split('@')[0];
 
-      if (inserted) {
-        currentProfile = inserted;
+    // Try insert (may fail if already exists due to RLS — that's ok)
+    const { data: inserted } = await sb.from('profiles').insert({
+      id: currentUser.id,
+      username: metaUsername,
+      score: 0,
+      known_cards: '[]',
+      quiz_highscore: 0
+    }).select().single();
+
+    if (inserted) {
+      currentProfile = inserted;
+    } else {
+      // Insert failed (maybe row exists but RLS blocked read) — use in-memory fallback
+      // Try one more read after a short wait
+      await new Promise(r => setTimeout(r, 400));
+      const { data: retry } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+      if (retry) {
+        currentProfile = retry;
+        score = retry.score || 0;
+        try { knownCards = new Set(JSON.parse(retry.known_cards || '[]')); } catch(e) { knownCards = new Set(); }
+        quizHighscore = retry.quiz_highscore || 0;
       } else {
-        console.error('Profile insert in loadProfile failed:', insertErr);
-        // Last resort fallback
+        // Absolute fallback — at least show the username
         currentProfile = { username: metaUsername, score: 0, known_cards: '[]', quiz_highscore: 0 };
       }
     }
