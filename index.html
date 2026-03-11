@@ -1308,14 +1308,18 @@ async function loadProfile() {
 }
 
 async function saveProfile() {
-  if (!currentUser) return;
-  await sb.from('profiles').upsert({
+  if (!currentUser) { console.warn('saveProfile: kein User'); return; }
+  const payload = {
     id: currentUser.id,
     score: score,
     known_cards: JSON.stringify([...knownCards]),
     quiz_highscore: quizHighscore,
     updated_at: new Date().toISOString()
-  });
+  };
+  console.log('saveProfile called', payload);
+  const { data, error } = await sb.from('profiles').upsert(payload);
+  if (error) console.error('saveProfile ERROR:', error);
+  else console.log('saveProfile OK', data);
 }
 
 function showApp() {
